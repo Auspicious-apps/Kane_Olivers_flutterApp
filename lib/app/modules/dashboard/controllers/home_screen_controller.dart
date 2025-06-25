@@ -9,7 +9,9 @@ class HomeScreenController extends BaseController {
 
   TextEditingController? emailController;
 
+  final List tabs=["Collect Stamp","Unique Code","Invite Friends","Spin a Wheel"];
 
+  final List resturants=["Starbucks","McDonals","Hermer","Burger King","Hungry Point"];
 
 
 

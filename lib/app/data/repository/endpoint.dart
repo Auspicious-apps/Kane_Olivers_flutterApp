@@ -1,5 +1,5 @@
 
-const String baseUrl = "https://07f0-103-223-15-43.ngrok-free.app/";
+const String baseUrl = "https://1f4d-103-223-15-43.ngrok-free.app/";
 const String imageBaseUrl =
     "https://demoprojectsbucket.sgp1.digitaloceanspaces.com/image/original/";
 const String videoBaseUrl =

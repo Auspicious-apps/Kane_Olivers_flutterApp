@@ -20,4 +20,11 @@ abstract class AppRoutes {
   static const otpVerificationRoute = '/otpVerificationRoute';
   static const confirmPasswordRoute = '/confirmPasswordRoute';
   static const dashboard = '/dashboard';
+  static const changePassword = '/changePassword';
+  static const StaticPage = '/StaticPage';
+  static const TopLeadersSettingRoute = '/TopLeadersSettingRoute';
+  static const NotificationRoute = '/NotificationRoute';
+  static const SpinWheelRoute = '/SpinWheelRoute';
+
+
 }

@@ -49,31 +49,308 @@ class HomeScreen extends GetView<HomeScreenController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-
-
-
-        TextView(
-          text: "Home",
-          textAlign: TextAlign.start,
-          maxLines: 10,
-          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-            color: AppColors.subHeadingColor,
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            fontFamily: "Mulish",
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextView(
+              text: "Hi, John Deo!",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                color: AppColors.LargeTextColor,
+                fontSize: 22,
+                fontFamily: "TOMMYSOFT",
+              ),
+            ).marginSymmetric(vertical: 10),
+            Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: Center(
+                child: AssetImageWidget(
+                  iconNotification,
+                  imageHeight: 25,
+                  imageFitType: BoxFit.contain,
+                  imageWidth: 25,
+                ),
+              ),
+            ),
+          ],
+        ).marginSymmetric(horizontal: 20),
+        SizedBox(height: Get.height * 0.07),
+        Container(
+          height: 100,
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: AppColors.LargeTextColor,
+            borderRadius: BorderRadius.circular(8),
           ),
-        ).marginSymmetric(vertical:10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              AssetImageWidget(
+                coinsicon,
+                imageHeight: 50,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextView(
+                          text: "Total Points",
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            color: AppColors.blackColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Mulish",
+                          ),
+                        ).marginSymmetric(horizontal: 10),
+                        TextView(
+                          text: "150",
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            color: AppColors.blackColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "TOMMYSOFT",
+                          ),
+                        ).marginSymmetric(horizontal: 10, vertical: 10),
+                      ],
+                    ),
+                    Icon(Icons.arrow_forward_ios),
+                  ],
+                ),
+              ),
+            ],
+          ).paddingSymmetric(horizontal: margin_20),
+        ).marginSymmetric(horizontal: 20),
+        SizedBox(height: 20),
+        Container(
+          height: height_130,
+          width: Get.width,
+          decoration: BoxDecoration(
+            color: AppColors.backgroundColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const ClampingScrollPhysics(),
+              itemCount: controller.tabs.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: (){
+                    if(controller.tabs[index]=="Spin a Wheel"){
+                      Get.toNamed(AppRoutes.SpinWheelRoute);
+                    }
+                  },
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 70,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(70),
+                          ),
+                      child: Center(
+                      child: AssetImageWidget(index==0?coinsicon:index==1?iconScanner:index==2?iconInviteFriend:iconSpin,
+                      imageHeight: 35,
+                      imageFitType: BoxFit.contain,
+                      imageWidth: 35,
+                    ),
+                  ),
+                        ).marginSymmetric(horizontal: 10),
+                        SizedBox(height: 10,),
+                        TextView(
+                          text: controller.tabs[index],
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            color: AppColors.whiteColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Mulish",
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ).marginSymmetric(horizontal: 10),
+        ).marginSymmetric(horizontal: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextView(
+              text: "Popular Restaurants",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                color: AppColors.whiteColor,
+                fontSize: 18,
 
+                fontFamily: "TOMMYSOFT",
+              ),
+            ),
+            Row(
+              children: [
+                TextView(
+                  text: "View All",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: AppColors.whiteColor,
+                    fontSize: 12,
+                
+                    fontFamily: "TOMMYSOFT",
+                  ),
+                ),
+                Icon(Icons.arrow_forward,color: Colors.white,size: 12,).marginSymmetric(horizontal: 5)
+              ],
+            )
+          ],
+        ).marginSymmetric(horizontal: 20, vertical: 20),
+        Container(
+          height: height_100,
+          width: Get.width,
+          decoration: BoxDecoration(
+
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const ClampingScrollPhysics(),
+            itemCount: controller.resturants.length,
+            itemBuilder: (context, index) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 70,
+                    width: 70,
+                    child: AssetImageWidget(index==0?iconStarBucks:index==1?iconMc:index==2?iconHm:iconBk,
+                      imageHeight: 35,
+                      imageFitType: BoxFit.cover,
+                      imageWidth: 35,
+                    ),
+                  ).marginSymmetric(horizontal:5),
+                  SizedBox(height: 10,),
+                  TextView(
+                    text: controller.resturants[index],
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: AppColors.whiteColor,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Mulish",
+                    ),
+                  )
+                ],
+              );
+            },
+          ),
+        ).marginOnly(left: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextView(
+              text: "Offers Available",
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                color: AppColors.whiteColor,
+                fontSize: 18,
+
+                fontFamily: "TOMMYSOFT",
+              ),
+            ),
+            Row(
+              children: [
+                TextView(
+                  text: "View All",
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: AppColors.whiteColor,
+                    fontSize: 12,
+
+                    fontFamily: "TOMMYSOFT",
+                  ),
+                ),
+                Icon(Icons.arrow_forward,color: Colors.white,size: 12,).marginSymmetric(horizontal: 5)
+              ],
+            )
+          ],
+        ).marginSymmetric(horizontal: 20).marginOnly(top: margin_10),
+        Container(
+          height: height_220,
+          width: Get.width,
+          decoration: BoxDecoration(
+
+
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: const ClampingScrollPhysics(),
+            itemCount: controller.resturants.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: Get.width*0.7,
+                decoration: BoxDecoration(color: AppColors.backgroundColor,borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
+                    TextView(
+                      text:"Get free coffee",
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: AppColors.whiteColor,
+                        fontSize: 14,
+                         fontWeight: FontWeight.w800,
+                        fontFamily: "Mulish",
+                      ),
+                    ).marginSymmetric(horizontal: margin_10,vertical: margin_10),
+                    TextView(
+                      text:"10 Stamps",
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: AppColors.whiteColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Mulish",
+                      ),
+                    ).marginSymmetric(horizontal: margin_10),
+                  ],
+                ),
+              ).marginSymmetric(horizontal: 10,vertical: 20);
+            },
+          ),
+        ).marginOnly(left: 20),
       ],
-    ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20),
+    ).marginOnly(top: margin_10),
   );
-
-
-
-
-
-
-
 }
-
-

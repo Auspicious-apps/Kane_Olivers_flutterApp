@@ -23,6 +23,18 @@ const String iconHelp = 'assets/images/help.png';
 const String iconPrivacy = 'assets/images/privacy.png';
 const String iconLogOut = 'assets/images/logout.png';
 
+const String whiteBack = 'assets/images/whiteback.png';
+const String blackBack = 'assets/images/greyblck.png';
+const String iconScanner = 'assets/images/scanner.png';
+
+const String iconMc = 'assets/images/MC.png';
+const String iconBk = 'assets/images/Bk.png';
+const String iconHm = 'assets/images/HM.png';
+const String offerCoverImage = 'assets/images/offercover.png';
+
+const String iconSpin = 'assets/images/spin.png';
+const String iconInviteFriend = 'assets/images/invitefrind.png';
+const String iconStarBucks = 'assets/images/StarBucks.png';
 const String iconLogoGoogle = 'assets/icons/Google.png';
 const String iconLogoFacebook = 'assets/icons/facebook.png';
 const String iconLogoApple = 'assets/icons/apple_logo.png';

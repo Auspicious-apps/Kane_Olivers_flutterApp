@@ -145,6 +145,18 @@ class SettingScreen extends GetView<SettingScreenController> {
           },
         );
       }
+      if(name=="Change Password"){
+        Get.toNamed(AppRoutes.changePassword);
+      }
+      if(name=="Privacy Policy"||name=="Terms & Conditions"||name=="Help & Support"){
+      Get.toNamed(AppRoutes.StaticPage,arguments: {"otp":name});
+      }
+      if(name=="Top Leaders Privacy"){
+        Get.toNamed(AppRoutes.TopLeadersSettingRoute);
+      }
+      if(name=="Notifications"){
+        Get.toNamed(AppRoutes.NotificationRoute);
+      }
     },
     child: Container(
       height: 40,
