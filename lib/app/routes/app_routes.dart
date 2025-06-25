@@ -25,6 +25,6 @@ abstract class AppRoutes {
   static const TopLeadersSettingRoute = '/TopLeadersSettingRoute';
   static const NotificationRoute = '/NotificationRoute';
   static const SpinWheelRoute = '/SpinWheelRoute';
-
+  static const ResturantRoute = '/ResturantRoute';
 
 }

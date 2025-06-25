@@ -1,4 +1,5 @@
 import 'package:OLIVERS/app/core/widget/annotated_region_widget.dart';
+import 'package:OLIVERS/app/core/widget/network_image_widget.dart';
 import 'package:OLIVERS/app/modules/AuthModule/controllers/Referal_Controller.dart';
 import 'package:OLIVERS/app/modules/AuthModule/controllers/forget_controller.dart';
 import 'package:OLIVERS/app/modules/AuthModule/controllers/sign_up_controller.dart';
@@ -45,7 +46,7 @@ class HomeScreen extends GetView<HomeScreenController> {
 
   Widget _body(BuildContext context) => SingleChildScrollView(
     physics: const ClampingScrollPhysics(),
-    child: Column(
+    child: Obx(()=>Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -54,7 +55,7 @@ class HomeScreen extends GetView<HomeScreenController> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextView(
-              text: "Hi, John Deo!",
+              text: "Hi, ${controller.userResponseModel?.value.data?.userName??""}!",
               textAlign: TextAlign.center,
               maxLines: 1,
               textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
@@ -117,16 +118,32 @@ class HomeScreen extends GetView<HomeScreenController> {
                             fontFamily: "Mulish",
                           ),
                         ).marginSymmetric(horizontal: 10),
-                        TextView(
-                          text: "150",
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                            color: AppColors.blackColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "TOMMYSOFT",
-                          ),
+                        Row(
+                          children: [
+                            TextView(
+                              text: "${controller.userResponseModel?.value.data?.totalPoints}",
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                                color: AppColors.blackColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "TOMMYSOFT",
+                              ),
+                            ),
+                            TextView(
+                              text: "(\$${controller.userResponseModel?.value.data?.totalPoints})",
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                                color: AppColors.blackColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Mulish",
+                              ),
+                            ).marginSymmetric(horizontal:4),
+
+                          ],
                         ).marginSymmetric(horizontal: 10, vertical: 10),
                       ],
                     ),
@@ -210,26 +227,31 @@ class HomeScreen extends GetView<HomeScreenController> {
                 fontFamily: "TOMMYSOFT",
               ),
             ),
-            Row(
-              children: [
-                TextView(
-                  text: "View All",
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    color: AppColors.whiteColor,
-                    fontSize: 12,
-                
-                    fontFamily: "TOMMYSOFT",
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(AppRoutes.ResturantRoute);
+              },
+              child: Row(
+                children: [
+                  TextView(
+                    text: "View All",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: AppColors.whiteColor,
+                      fontSize: 12,
+
+                      fontFamily: "TOMMYSOFT",
+                    ),
                   ),
-                ),
-                Icon(Icons.arrow_forward,color: Colors.white,size: 12,).marginSymmetric(horizontal: 5)
-              ],
+                  Icon(Icons.arrow_forward,color: Colors.white,size: 12,).marginSymmetric(horizontal: 5)
+                ],
+              ),
             )
           ],
         ).marginSymmetric(horizontal: 20, vertical: 20),
         Container(
-          height: height_100,
+          height: height_120,
           width: Get.width,
           decoration: BoxDecoration(
 
@@ -238,33 +260,37 @@ class HomeScreen extends GetView<HomeScreenController> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const ClampingScrollPhysics(),
-            itemCount: controller.resturants.length,
+            itemCount: controller.userResponseModel?.value.data?.popularRestaurants?.length??0,
             itemBuilder: (context, index) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 70,
-                    width: 70,
-                    child: AssetImageWidget(index==0?iconStarBucks:index==1?iconMc:index==2?iconHm:iconBk,
-                      imageHeight: 35,
-                      imageFitType: BoxFit.cover,
-                      imageWidth: 35,
-                    ),
-                  ).marginSymmetric(horizontal:5),
-                  SizedBox(height: 10,),
-                  TextView(
-                    text: controller.resturants[index],
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: AppColors.whiteColor,
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Mulish",
-                    ),
-                  )
-                ],
+              return SizedBox(
+                width: Get.width/3.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 70,
+                      width: 70,
+                      // child:NetworkImageWidget(imageUrl:controller.userResponseModel?.data?.popularRestaurants?[index]?.image??"",placeHolder:iconHm ,)
+                      child: AssetImageWidget(index==0?iconStarBucks:index==1?iconMc:index==2?iconHm:iconBk,
+                        imageHeight: 35,
+                        imageFitType: BoxFit.cover,
+                        imageWidth: 35,
+                      ),
+                    ).marginSymmetric(horizontal:5),
+                    SizedBox(height: 10,),
+                    TextView(
+                      text:  controller.userResponseModel?.value.data?.popularRestaurants?[index].restaurantName??"",
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: AppColors.whiteColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: "Mulish",
+                      ),
+                    )
+                  ],
+                ),
               );
             },
           ),
@@ -312,7 +338,7 @@ class HomeScreen extends GetView<HomeScreenController> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const ClampingScrollPhysics(),
-            itemCount: controller.resturants.length,
+            itemCount: controller.userResponseModel?.value.data?.offersAvailable?.length??0,
             itemBuilder: (context, index) {
               return Container(
                 width: Get.width*0.7,
@@ -323,7 +349,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                   children: [
                   AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
                     TextView(
-                      text:"Get free coffee",
+                      text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.offerName}",
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
@@ -333,16 +359,32 @@ class HomeScreen extends GetView<HomeScreenController> {
                         fontFamily: "Mulish",
                       ),
                     ).marginSymmetric(horizontal: margin_10,vertical: margin_10),
-                    TextView(
-                      text:"10 Stamps",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: AppColors.whiteColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Mulish",
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextView(
+                          text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.description}",
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            color: AppColors.whiteColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Mulish",
+                          ),
+                        ),
+                        TextView(
+                          text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.visits} Visits",
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                            color: AppColors.whiteColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Mulish",
+                          ),
+                        ),
+                      ],
                     ).marginSymmetric(horizontal: margin_10),
                   ],
                 ),
@@ -351,6 +393,6 @@ class HomeScreen extends GetView<HomeScreenController> {
           ),
         ).marginOnly(left: 20),
       ],
-    ).marginOnly(top: margin_10),
+    )).marginOnly(top: margin_10),
   );
 }

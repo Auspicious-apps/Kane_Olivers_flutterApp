@@ -1,5 +1,5 @@
 
-const String baseUrl = "https://1f4d-103-223-15-43.ngrok-free.app/";
+const String baseUrl = "https://798c-103-223-15-43.ngrok-free.app/";
 const String imageBaseUrl =
     "https://demoprojectsbucket.sgp1.digitaloceanspaces.com/image/original/";
 const String videoBaseUrl =
@@ -17,6 +17,11 @@ const String forgetPasswordApiEndPoint = "api/forgot-password";
 const String forgetOtpVerifyApiEndPoint = "api/verify-otp";
 const String changePasswordEndPoint = "api/new-password-otp-verified";
 const String ResendOtpApiEndPoint = "api/resend-otp";
+
+const String HomeApiEndPoint = "api/user/home";
+
+const String GetAllResturantsEndPoint = "api/user/restaurants";
+
 //type const
 
 const typeActive = 0;

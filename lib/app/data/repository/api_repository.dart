@@ -15,6 +15,8 @@ import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 import '../../export.dart';
 
+import '../../modules/homeScreens/models/responseModels/HomeResponseModel.dart';
+import '../../modules/homeScreens/models/responseModels/ResturantsResponseModel.dart';
 import 'dio_client.dart';
 import 'endpoint.dart';
 import 'network_exceptions.dart' show NetworkExceptions;
@@ -79,6 +81,27 @@ class Repository {
       return Future.error(NetworkExceptions.getDioException(e));
     }
   }
+
+
+  Future HomeApi({query}) async {
+    try {
+      final response = await dioClient!.get(HomeApiEndPoint,skipAuth: false,queryParameters: query);
+      return HomeResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future GetAllResturantsApi({query}) async {
+    try {
+      final response = await dioClient!.get(GetAllResturantsEndPoint,skipAuth: false,queryParameters: query);
+      return ResturantsResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
+
 
 
   Future ChangePasswordApi(

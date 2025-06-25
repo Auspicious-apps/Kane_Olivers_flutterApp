@@ -1,36 +1,39 @@
-
-
-
 import '../../../core/widget/intl_phone_field/countries.dart';
 import '../../../export.dart';
 import '../../homeScreens/models/responseModels/HomeResponseModel.dart';
+import '../models/responseModels/ResturantsResponseModel.dart';
 import '/app/core/base/base_controller.dart';
 
-class HomeScreenController extends BaseController {
+class ResturantController extends BaseController {
 
   TextEditingController? emailController;
+  TextEditingController searchController = TextEditingController();
 
   final List tabs=["Collect Stamp","Unique Code","Invite Friends","Spin a Wheel"];
 
   final List resturants=["Starbucks","McDonals","Hermer","Burger King","Hungry Point"];
 
   RxBool isLoading = false.obs;
+  RxList<PopularRestaurants> filteredRestaurants = <PopularRestaurants>[].obs;
 
   FocusNode? emailFocusNode;
-  Rx<HomeResponseModel> userResponseModel=Rx<HomeResponseModel>(HomeResponseModel());
+  Rx<ResturantsResponseModel> userResponseModel=Rx<ResturantsResponseModel>(ResturantsResponseModel());
 
   @override
   void onInit() {
     fetchHomeData();
-
     super.onInit();
   }
 
- fetchHomeData() {
-   isLoading.value=true;
-   isLoading.refresh();
+
+
+
+
+  fetchHomeData({String? value}) {
+    isLoading.value=true;
+    isLoading.refresh();
     try{
-      repository.HomeApi().then((value) async {
+      repository.GetAllResturantsApi(query: {"description":value?.trim(),"limit":30,"page":1}).then((value) async {
         if (value != null) {
           userResponseModel.value = value;
           isLoading.value=false;
@@ -49,10 +52,9 @@ class HomeScreenController extends BaseController {
     }
   }
 
-
-
-
-
+  void clearSearch() {
+    searchController.clear();
+  }
 
   void skipPage() {
 
@@ -63,6 +65,7 @@ class HomeScreenController extends BaseController {
   void dispose() {
     _disposeEditTextController();
     _disposeFocusNode();
+    searchController.dispose();
     super.dispose();
   }
 

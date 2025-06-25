@@ -93,6 +93,7 @@ class SpinningWheel extends GetView<SpinningWheelController> {
                 fit: BoxFit.contain,
               ).marginSymmetric(horizontal: margin_30, vertical: 30),
               PPSpinWheel(
+
                 key: GlobalKey<PPSpinWheelState>(),
                 size: Get.width * 0.8,
                 backgroundSize: Get.width * 0.8,
@@ -170,12 +171,43 @@ class SpinningWheel extends GetView<SpinningWheelController> {
                   controller.stopSpinAudio();
                 },
                 onStartPressed: () {
+                  if (controller.freeSpin.value == 0) {
 
+                    controller.freeSpin.value--;
+                    Get.dialog(
+                      AlertDialog(
+                        title: Text('No Free Spins'),
+                        content: Text('You have no free spins left!'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Get.back(),
+                            child: Text('OK'),
+                          ),
+                        ],
+                      ),
+                      barrierDismissible: false,
+                    );
+                    return;
+                  }
+                  if(controller.freeSpin.value >0){
                     controller.playSpinAudio();
-
-
-
-                  print(controller.freeSpin.value);
+                    controller.freeSpin.value--;
+                  }
+                },
+                onCannotSpin: () {
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text('No Free Spins'),
+                      content: Text('You have no free spins left!'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Get.back(),
+                          child: Text('OK'),
+                        ),
+                      ],
+                    ),
+                    barrierDismissible: false,
+                  );
                 },
               ).marginSymmetric(horizontal: 36, vertical: 36),
               Center(
@@ -184,7 +216,7 @@ class SpinningWheel extends GetView<SpinningWheelController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: Get.height * 0.6), // Adjust spacing for result display
-                    StreamBuilder<int>(
+                  Obx (()=> controller.freeSpin.value<0? SizedBox()  :StreamBuilder<int>(
                       stream: controller.dividerStream,
                       builder: (context, snapshot) {
                         print(RouletteScore.labels[snapshot.data]);
@@ -206,7 +238,7 @@ class SpinningWheel extends GetView<SpinningWheelController> {
                         )
                             : Container();
                       },
-                    ),
+                    )),
                   ],
                 ),
               ),

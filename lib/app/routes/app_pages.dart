@@ -23,7 +23,9 @@ import 'package:OLIVERS/app/modules/AuthModule/views/confirm_password.dart';
 import 'package:OLIVERS/app/modules/AuthModule/views/forget_password.dart';
 import 'package:OLIVERS/app/modules/AuthModule/views/otp_verification.dart';
 import 'package:OLIVERS/app/modules/AuthModule/views/signup_Screen.dart';
+import 'package:OLIVERS/app/modules/homeScreens/bindings/Resturant_bindings.dart';
 import 'package:OLIVERS/app/modules/homeScreens/bindings/spinning_wheel_binding.dart';
+import 'package:OLIVERS/app/modules/homeScreens/views/ResturantScreen.dart';
 import 'package:OLIVERS/app/modules/homeScreens/views/spinning_wheel.dart';
 import 'package:OLIVERS/app/modules/setting/bindings/changePasswordBindings.dart';
 import 'package:OLIVERS/app/modules/setting/views/staticPage.dart';
@@ -122,7 +124,12 @@ class AppPages {
 
     ),
 
+    GetPage(
+      name: AppRoutes.ResturantRoute,
+      page: () =>  Resturantscreen(),
+      bindings: [ResturantBindings()],
 
+    ),
 
   ];
 }

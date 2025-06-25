@@ -31,6 +31,7 @@ const String iconMc = 'assets/images/MC.png';
 const String iconBk = 'assets/images/Bk.png';
 const String iconHm = 'assets/images/HM.png';
 const String offerCoverImage = 'assets/images/offercover.png';
+const String samplePlaceholder = 'assets/images/offercover.png';
 
 const String iconSpin = 'assets/images/spin.png';
 const String iconInviteFriend = 'assets/images/invitefrind.png';
