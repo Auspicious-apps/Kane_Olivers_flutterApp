@@ -88,7 +88,7 @@ class Resturantscreen extends GetView<ResturantController> {
           ),
         ],
       ).marginOnly(top: margin_14, left: 20),
-      SizedBox(height: Get.height * 0.05),
+      SizedBox(height: Get.height * 0.07),
 
       // Search Bar
       Container(
@@ -108,7 +108,7 @@ class Resturantscreen extends GetView<ResturantController> {
             fontFamily: "Mulish",
           ),
           decoration: InputDecoration(
-            hintText: "Search restaurants...",
+            hintText: "Search Restaurants...",
             hintStyle: TextStyle(
               color: AppColors.blackColor,
               fontSize: 16,
@@ -153,32 +153,27 @@ class Resturantscreen extends GetView<ResturantController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.search_off,
-                            size: 64,
-                            color: AppColors.whiteColor.withOpacity(0.5),
-                          ),
-                          SizedBox(height: 16),
+
                           TextView(
-                            text: controller.searchController.text.isNotEmpty
-                                ? "No restaurants found"
-                                : "No restaurants available",
+                            text: "No Restaurant Found!",
                             textStyle: TextStyle(
                               color: AppColors.whiteColor.withOpacity(0.7),
                               fontSize: 18,
-                              fontFamily: "Mulish",
+                              fontFamily: "TOMMYSOFT",
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          if (controller.searchController.text.isNotEmpty)
+
                             TextView(
-                              text: "Try a different search term",
+                              text: "We’re still adding new merchants! Check back soon for more options.",
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
                               textStyle: TextStyle(
                                 color: AppColors.whiteColor.withOpacity(0.5),
                                 fontSize: 14,
                                 fontFamily: "Mulish",
                               ),
-                            ).marginOnly(top: 8),
+                            ).marginOnly(top: 8,left: 20,right: 20),
                         ],
                       ),
                     )
@@ -186,48 +181,55 @@ class Resturantscreen extends GetView<ResturantController> {
                       padding: const EdgeInsets.symmetric( vertical: 10),
                       physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
+
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2, // 2 columns
                         crossAxisSpacing: 16, // Space between columns
                         mainAxisSpacing: 16, // Space between rows
-                        childAspectRatio: 0.8, // Adjust for image and text
+                        childAspectRatio: 1, // Adjust for image and text
                       ),
                       itemCount: controller.userResponseModel.value.data?.restaurants?.length??0,
                       itemBuilder: (context, index) {
                         final restaurant = controller.userResponseModel.value.data?.restaurants?[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AssetImageWidget(
-                                index == 0
-                                    ? iconStarBucks
-                                    : index == 1
-                                    ? iconMc
-                                    : index == 2
-                                    ? iconHm
-                                    : iconBk,
-                                imageHeight: 70,
-                                imageFitType: BoxFit.cover,
-                                imageWidth: 70,
-                              ).marginSymmetric(horizontal: 5),
-                              const SizedBox(height: 10),
-                              TextView(
-                                text: restaurant?.restaurantName ?? "",
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                                  color: AppColors.whiteColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: "Mulish",
-                                ),
-                              ).marginSymmetric(horizontal: 20),
-                            ],
+                        return GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.OffersRoute,arguments: {"id":"${controller.userResponseModel.value.data?.restaurants?[index].sId}"});
+
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:AppColors.backgroundColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AssetImageWidget(
+                                  index == 0
+                                      ? iconStarBucks
+                                      : index == 1
+                                      ? iconMc
+                                      : index == 2
+                                      ? iconHm
+                                      : iconBk,
+                                  imageHeight: 70,
+                                  imageFitType: BoxFit.cover,
+                                  imageWidth: 70,
+                                ).marginSymmetric(horizontal: 5),
+                                const SizedBox(height: 10),
+                                TextView(
+                                  text: restaurant?.restaurantName ?? "",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                                    color: AppColors.whiteColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: "Mulish",
+                                  ),
+                                ).marginSymmetric(horizontal: 20 ),
+                              ],
+                            ),
                           ),
                         );
                       },

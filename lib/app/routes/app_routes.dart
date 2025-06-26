@@ -26,5 +26,6 @@ abstract class AppRoutes {
   static const NotificationRoute = '/NotificationRoute';
   static const SpinWheelRoute = '/SpinWheelRoute';
   static const ResturantRoute = '/ResturantRoute';
+  static const OffersRoute = '/OfferRoute';
 
 }

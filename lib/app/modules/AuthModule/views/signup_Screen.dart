@@ -47,7 +47,7 @@ class SignupScreen extends GetView<SignUpController> {
         physics: const ClampingScrollPhysics(),
         child: Form(
           key: controller.signupFormKey,
-          child: Column(
+          child: Obx(()=>Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -208,7 +208,7 @@ class SignupScreen extends GetView<SignUpController> {
                 child: _haveAccount(),
               ).marginSymmetric(vertical: 10)
             ],
-          ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20),
+          ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20)),
         ),
       );
 
@@ -231,10 +231,15 @@ class SignupScreen extends GetView<SignUpController> {
                   Get.back();
                 },
               style: textStyleBodyLarge().copyWith(
-                color: Colors.yellow,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.solid, // Optional: ensures a solid line
+                decorationThickness: 1.5, // Adjust thickness for visibility
+                decorationColor: Colors.yellow, // Match or customize underline color
                 fontSize: 13,
-                fontWeight: FontWeight.w700,
+                color: Colors.yellow,
+                fontWeight: FontWeight.w900,
                 fontFamily: "Mulish",
+                height: 1.5, // Increases vertical spacing, pushing underline further from text
               ),
             ),
           ],
@@ -260,10 +265,15 @@ class SignupScreen extends GetView<SignUpController> {
                   Get.toNamed(AppRoutes.LoginRoute);
                 },
               style: textStyleBodyLarge().copyWith(
-                color: AppColors.whiteColor,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.solid, // Optional: ensures a solid line
+                decorationThickness: 1.5, // Adjust thickness for visibility
+                decorationColor: Colors.yellow, // Match or customize underline color
                 fontSize: 13,
+                color: Colors.yellow,
                 fontWeight: FontWeight.w900,
                 fontFamily: "Mulish",
+                height: 1.5, // Increases vertical spacing, pushing underline further from text
               ),
             ),
           ],
@@ -286,7 +296,7 @@ class SignupScreen extends GetView<SignUpController> {
         borderRadius: Get.width * 0.1,
         formatter: [NameTextInputFormatter()],
         validate: (value) => NameValidator.validateName(
-          title: "Full Name".toLowerCase(),
+          title: "Full name",
           value: value?.trim() ?? '',
         ),
       );

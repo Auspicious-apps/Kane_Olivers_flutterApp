@@ -48,7 +48,7 @@ class LoginScreen extends GetView<LoginController> {
         physics: const ClampingScrollPhysics(),
         child: Form(
           key: controller.loginFormKey,
-          child: Column(
+          child: Obx(()=>Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -82,7 +82,7 @@ class LoginScreen extends GetView<LoginController> {
                           .textTheme
                           .displayMedium!
                           .copyWith(
-                              color: AppColors.whiteColor,
+                              color: Colors.yellow, //,
                               fontSize: 15,
                               fontFamily: "Mulish",
                               fontWeight: FontWeight.w900)),
@@ -99,7 +99,7 @@ class LoginScreen extends GetView<LoginController> {
 
               // 2% bottom padding
             ],
-          ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20),
+          ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20)),
         ),
       );
 
@@ -145,10 +145,15 @@ class LoginScreen extends GetView<LoginController> {
            Get.offAllNamed(AppRoutes.refferalScreen);
                 },
               style: textStyleBodyLarge().copyWith(
-                color: AppColors.whiteColor,
+                decoration: TextDecoration.underline,
+                decorationStyle: TextDecorationStyle.solid, // Optional: ensures a solid line
+                decorationThickness: 1.5, // Adjust thickness for visibility
+                decorationColor: Colors.yellow, // Match or customize underline color
                 fontSize: 13,
+                color: Colors.yellow,
                 fontWeight: FontWeight.w900,
                 fontFamily: "Mulish",
+                height: 1.5, // Increases vertical spacing, pushing underline further from text
               ),
             ),
           ],

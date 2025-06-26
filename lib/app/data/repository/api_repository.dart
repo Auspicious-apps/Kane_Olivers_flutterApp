@@ -16,6 +16,7 @@ import 'package:http_parser/http_parser.dart';
 import '../../export.dart';
 
 import '../../modules/homeScreens/models/responseModels/HomeResponseModel.dart';
+import '../../modules/homeScreens/models/responseModels/OffersResponseModel.dart';
 import '../../modules/homeScreens/models/responseModels/ResturantsResponseModel.dart';
 import 'dio_client.dart';
 import 'endpoint.dart';
@@ -96,6 +97,15 @@ class Repository {
     try {
       final response = await dioClient!.get(GetAllResturantsEndPoint,skipAuth: false,queryParameters: query);
       return ResturantsResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future GetAllOffersApi({query}) async {
+    try {
+      final response = await dioClient!.get(GetAllOffersEndPoint,skipAuth: false,queryParameters: query);
+      return OffersResponseModel.fromJson(response);
     } catch (e) {
       return Future.error(NetworkExceptions.getDioException(e));
     }

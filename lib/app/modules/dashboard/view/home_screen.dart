@@ -262,34 +262,39 @@ class HomeScreen extends GetView<HomeScreenController> {
             physics: const ClampingScrollPhysics(),
             itemCount: controller.userResponseModel?.value.data?.popularRestaurants?.length??0,
             itemBuilder: (context, index) {
-              return SizedBox(
-                width: Get.width/3.8,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 70,
-                      width: 70,
-                      // child:NetworkImageWidget(imageUrl:controller.userResponseModel?.data?.popularRestaurants?[index]?.image??"",placeHolder:iconHm ,)
-                      child: AssetImageWidget(index==0?iconStarBucks:index==1?iconMc:index==2?iconHm:iconBk,
-                        imageHeight: 35,
-                        imageFitType: BoxFit.cover,
-                        imageWidth: 35,
-                      ),
-                    ).marginSymmetric(horizontal:5),
-                    SizedBox(height: 10,),
-                    TextView(
-                      text:  controller.userResponseModel?.value.data?.popularRestaurants?[index].restaurantName??"",
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: AppColors.whiteColor,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: "Mulish",
-                      ),
-                    )
-                  ],
+              return GestureDetector(
+                onTap: (){
+                  Get.toNamed(AppRoutes.OffersRoute,arguments: {"id":"${controller.userResponseModel.value.data?.popularRestaurants?[index].sId}"});
+                },
+                child: SizedBox(
+                  width: Get.width/3.8,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 70,
+                        width: 70,
+                        // child:NetworkImageWidget(imageUrl:controller.userResponseModel?.data?.popularRestaurants?[index]?.image??"",placeHolder:iconHm ,)
+                        child: AssetImageWidget(index==0?iconStarBucks:index==1?iconMc:index==2?iconHm:iconBk,
+                          imageHeight: 35,
+                          imageFitType: BoxFit.cover,
+                          imageWidth: 35,
+                        ),
+                      ).marginSymmetric(horizontal:5),
+                      SizedBox(height: 10,),
+                      TextView(
+                        text:  controller.userResponseModel?.value.data?.popularRestaurants?[index].restaurantName??"",
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                        textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: AppColors.whiteColor,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Mulish",
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               );
             },
@@ -309,21 +314,26 @@ class HomeScreen extends GetView<HomeScreenController> {
                 fontFamily: "TOMMYSOFT",
               ),
             ),
-            Row(
-              children: [
-                TextView(
-                  text: "View All",
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    color: AppColors.whiteColor,
-                    fontSize: 12,
+            GestureDetector(
+              onTap: (){
+                Get.toNamed(AppRoutes.OffersRoute);
+              },
+              child: Row(
+                children: [
+                  TextView(
+                    text: "View All",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      color: AppColors.whiteColor,
+                      fontSize: 12,
 
-                    fontFamily: "TOMMYSOFT",
+                      fontFamily: "TOMMYSOFT",
+                    ),
                   ),
-                ),
-                Icon(Icons.arrow_forward,color: Colors.white,size: 12,).marginSymmetric(horizontal: 5)
-              ],
+                  Icon(Icons.arrow_forward,color: Colors.white,size: 12,).marginSymmetric(horizontal: 5)
+                ],
+              ),
             )
           ],
         ).marginSymmetric(horizontal: 20).marginOnly(top: margin_10),
@@ -349,7 +359,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                   children: [
                   AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
                     TextView(
-                      text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.offerName}",
+                      text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.restaurantId?.restaurantName}",
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
@@ -363,7 +373,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextView(
-                          text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.description}",
+                          text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.offerName}",
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(

@@ -33,7 +33,7 @@ class EmailValidator {
         focusNode.unfocus();
         focusNode.requestFocus();
       }
-      return "invalid email address";
+      return "Invalid email address";
     }
     return null;
   }
