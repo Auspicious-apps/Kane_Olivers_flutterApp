@@ -41,29 +41,32 @@ class Refferalscreen extends GetView<ReferalController> {
       height: MediaQuery.of(context).size.height -
           MediaQuery.of(context).padding.top,
       padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05), // 5% of screen width
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: Get.height * 0.2), // 8% of screen height
-          _image(),
-          TextView(
-            text: "Enter your referral code and get extra reward points.",
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-              color: AppColors.LargeTextColor,
-              fontSize:24,
-              fontFamily: "TOMMYSOFT",
+      child: Form(
+        key: controller.signupFormKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: Get.height * 0.2), // 8% of screen height
+            _image(),
+            TextView(
+              text: "Enter your referral code and get extra reward points.",
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                color: AppColors.LargeTextColor,
+                fontSize:24,
+                fontFamily: "TOMMYSOFT",
 
+              ),
             ),
-          ),
-          SizedBox(height: Get.height * 0.05), // 3% of screen height
-          _refferalCodeField(),
-          const Spacer(), // Pushes buttons to bottom
-          _buttons(),
-          SizedBox(height: Get.height * 0.02), // 2% bottom padding
-        ],
+            SizedBox(height: Get.height * 0.05), // 3% of screen height
+            _refferalCodeField(),
+            const Spacer(), // Pushes buttons to bottom
+            _buttons(),
+            SizedBox(height: Get.height * 0.02), // 2% bottom padding
+          ],
+        ),
       ),
     ),
   );
@@ -77,6 +80,7 @@ class Refferalscreen extends GetView<ReferalController> {
     maxLength: 30,
     focusNode: controller.RefferalCodeFocusNode,
     inputType: TextInputType.text,
+    validate: (value) => FieldChecker.fieldChecker(value, "Referral code cannot be empty"),
 
     borderRadius: Get.width * 0.1, // Relative to screen width
 
@@ -121,7 +125,10 @@ class Refferalscreen extends GetView<ReferalController> {
     buttonText: "Submit",
     textColor: AppColors.backgroundColor,
     onPressed:(){
-      Get.offAllNamed(AppRoutes.signUpRoute,arguments: {"Referral":controller.refferalCodeController?.text});
+  if (controller.signupFormKey.currentState!.validate()) {
+    Get.offAllNamed(AppRoutes.signUpRoute,
+        arguments: {"Referral": controller.refferalCodeController?.text});
+  }
     },
   );
 }

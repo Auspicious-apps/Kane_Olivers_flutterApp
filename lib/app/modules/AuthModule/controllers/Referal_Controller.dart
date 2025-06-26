@@ -7,6 +7,7 @@ import '/app/core/base/base_controller.dart';
 class ReferalController extends BaseController {
   TextEditingController? refferalCodeController;
   FocusNode? RefferalCodeFocusNode;
+  final signupFormKey = GlobalKey<FormState>();
   @override
   void onInit() {
     _initEditTextController();

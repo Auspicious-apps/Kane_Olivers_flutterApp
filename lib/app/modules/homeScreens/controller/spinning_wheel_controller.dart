@@ -8,7 +8,7 @@ import '/app/core/base/base_controller.dart';
 class SpinningWheelController extends BaseController {
   final StreamController<int> _dividerController = StreamController<int>.broadcast();
   Stream<int> get dividerStream => _dividerController.stream;
-  RxInt freeSpin=1.obs;
+  RxInt freeSpin=10.obs;
 
   // AudioPlayer instance for playing spin audio
   final AudioPlayer _audioPlayer = AudioPlayer();

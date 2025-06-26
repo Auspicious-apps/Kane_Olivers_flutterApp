@@ -30,9 +30,13 @@ class SignUpController extends BaseController {
   FocusNode? emailFocusNode;
   final List<String> genders=["Male","Female","Others"];
   var selectGender = "".obs;
+  var refferalcode = "".obs;
   @override
   void onInit() {
     _initEditTextController();
+    if(Get.arguments!=null){
+      refferalcode.value=Get.arguments['Referral'];
+    }
     _initFocusNode();
     _loadCountry();
     super.onInit();

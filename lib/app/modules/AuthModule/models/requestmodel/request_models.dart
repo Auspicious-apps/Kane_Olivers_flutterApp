@@ -18,7 +18,7 @@ class AuthRequestModel {
     data["password"] = password;
     data["gender"] = gender;
     data["fcmToken"] = fcmToken;
-    data["referalCode"] = referalCode;
+    data["referralCodeSignup"] = referalCode;
     return data;
   }
 
