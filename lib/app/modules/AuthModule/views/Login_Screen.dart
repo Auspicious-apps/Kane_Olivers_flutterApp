@@ -183,7 +183,7 @@ class LoginScreen extends GetView<LoginController> {
         maxLength: 30,
         obscureText: controller.ShowPassword.value,
         focusNode: controller.PasswordFocusNode,
-       formatter: [PasswordInputFormatter()],
+       // formatter: [PasswordInputFormatter()],
        validate: (value) =>
         PasswordFormValidator.validatePassword(value?.trim() ?? ""),
 
@@ -203,7 +203,7 @@ class LoginScreen extends GetView<LoginController> {
         courserColor: AppColors.smallTextColor,
         maxLength: 30,
         focusNode: controller.emailFocusNode,
-    formatter: [EmailTextInputFormatter()],
+    // formatter: [EmailTextInputFormatter()],
     inputType: TextInputType.emailAddress,
     validate: (value) => EmailValidator.validateEmail(value?.trim() ?? ""),
 
@@ -224,23 +224,24 @@ class LoginScreen extends GetView<LoginController> {
         buttonText: "Sign In",
         textColor: AppColors.backgroundColor,
         onPressed: () {
-          controller.isloading.value=true;
-          controller.isloading.refresh();
-          if (controller.loginFormKey.currentState!.validate()) {
-
-
-            Map<String, dynamic> requestModel = AuthRequestModel.loginRequestModel(
-
-                email: controller.emailController?.text?.trim(),
-                password: controller.PasswordTextController.text,
-                fcmToken: ""
-            );
-            controller.handleSubmit(requestModel);
-          }else{
-            controller.isloading.value=false;
+          if (controller.isloading.value == false) {
+            controller.isloading.value = true;
             controller.isloading.refresh();
+            if (controller.loginFormKey.currentState!.validate()) {
+              Map<String, dynamic> requestModel = AuthRequestModel
+                  .loginRequestModel(
+
+                  email: controller.emailController?.text?.trim(),
+                  password: controller.PasswordTextController.text,
+                  fcmToken: ""
+              );
+              controller.handleSubmit(requestModel);
+            } else {
+              controller.isloading.value = false;
+              controller.isloading.refresh();
+            }
           }
 
-        },
+        }
       ));
 }

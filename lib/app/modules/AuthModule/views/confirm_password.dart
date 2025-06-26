@@ -48,7 +48,7 @@ class ConfirmPassword extends GetView<ConfirmPasswordController> {
         physics: const ClampingScrollPhysics(),
         child: Form(
           key: controller.signupFormKey,
-          child: Column(
+          child: Obx(()=>Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -117,7 +117,10 @@ class ConfirmPassword extends GetView<ConfirmPasswordController> {
                         password: controller.ConfirmPasswordTextController.text,
                         otp: controller.otp.value
                     );
-                    controller.handleForgetSubmit(requestModel,context);
+                    if(controller.isloading.value==false){
+                      controller.handleForgetSubmit(requestModel,context);
+                    }
+
 
                   }
                 },
@@ -125,7 +128,7 @@ class ConfirmPassword extends GetView<ConfirmPasswordController> {
 
               // 2% bottom padding
             ],
-          ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20),
+          ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20)),
         ),
       );
 
@@ -153,7 +156,7 @@ class ConfirmPassword extends GetView<ConfirmPasswordController> {
         obscureText: controller.ShowPassword.value,
         focusNode: controller.PasswordFocusNode,
         inputType: TextInputType.text,
-        formatter: [PasswordInputFormatter()],
+        // formatter: [PasswordInputFormatter()],
         validate: (value) =>
             PasswordFormValidator.validatePassword(value?.trim() ?? ""),
         borderRadius: Get.width * 0.1, // Relative to screen width
@@ -184,7 +187,7 @@ class ConfirmPassword extends GetView<ConfirmPasswordController> {
         obscureText: controller.ShowConfirmPassword.value,
         focusNode: controller.ConfirmPasswordFocusNode,
         inputType: TextInputType.text,
-        formatter: [PasswordInputFormatter()],
+        // formatter: [PasswordInputFormatter()],
         validate: (value) => PasswordFormValidator.validateConfirmPasswordMatch(
             value: value?.trim() ?? "",
             password: controller.PasswordTextController.text),

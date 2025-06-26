@@ -35,6 +35,7 @@ class ConfirmPasswordController extends BaseController {
     isloading.value=true;
     isloading.refresh();
     try{
+      Get.closeAllSnackbars();
       repository.ChangePasswordApi(dataBody: data).then((value) async {
         if (value != null) {
           isloading.value=false;
@@ -89,7 +90,7 @@ class ConfirmPasswordController extends BaseController {
           ),
           TextView(
             textAlign: TextAlign.center,
-            text: "Updated Password Successfully!",
+            text: "Password Updated Successfully!",
             textStyle: const TextStyle(
                 color: AppColors.blackColor,
                 fontFamily: "TOMMYSOFT",

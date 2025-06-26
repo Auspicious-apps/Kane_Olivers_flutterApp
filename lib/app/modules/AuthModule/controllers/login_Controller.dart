@@ -28,7 +28,9 @@ class LoginController extends BaseController {
   handleSubmit(var data) {
     isloading.value = true;
     isloading.refresh();
+    Get.closeAllSnackbars();
     try {
+
       repository.LoginApi(dataBody: data).then((value) async {
         if (value != null) {
           userResponseModel = value;
@@ -38,6 +40,7 @@ class LoginController extends BaseController {
           isloading.value = false;
           isloading.refresh();
           if (userResponseModel?.data?.user?.isVerified == true) {
+            Get.snackbar('Success', 'Login Successfully');
             Get.toNamed(AppRoutes.dashboard);
           } else {
             Get.toNamed(AppRoutes.otpVerificationRoute);

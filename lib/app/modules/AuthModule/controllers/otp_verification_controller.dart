@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:otp_autofill/otp_autofill.dart';
@@ -56,11 +55,13 @@ class OtpVerificationController extends GetxController {
 
   ResendOtpApi(var data) {
     try {
+      Get.closeAllSnackbars();
       repository.ResendOtpApi(dataBody: data).then((value) async {
         if (value != null) {
           isresend.value=false;
           isresend.refresh();
           userResponseModel = value;
+          Get.snackbar('Success', 'Resend OTP send to your email');
           startOtpTimer();
         }
       }).onError((er, stackTrace) {
@@ -80,6 +81,7 @@ class OtpVerificationController extends GetxController {
     isloading.value=true;
     isloading.refresh();
     try{
+      Get.closeAllSnackbars();
       repository.SignupOtpVerifyApi(dataBody: data).then((value) async {
         if (value != null) {
           userResponseModel = value;
@@ -88,16 +90,20 @@ class OtpVerificationController extends GetxController {
           }
           isloading.value=false;
           isloading.refresh();
+          otpController.clear();
+          Get.snackbar('Success', 'Login Successfully');
           Get.offAllNamed(AppRoutes.dashboard);
         }
       }).onError((er, stackTrace) {
         print("$er");
+        otpController.clear();
         isloading.value=false;
         isloading.refresh();
         Get.snackbar('Error', '${er}');
       });
     }catch(er){
       isloading.value=false;
+      otpController.clear();
       isloading.refresh();
       print("$er");
     }
@@ -108,21 +114,26 @@ class OtpVerificationController extends GetxController {
     isloading.value=true;
     isloading.refresh();
     try{
+      Get.closeAllSnackbars();
       repository.ForgetOtpVerifyApi(dataBody: data).then((value) async {
         if (value != null) {
           userResponseModel = value;
           isloading.value=false;
           isloading.refresh();
-          Get.offNamed(AppRoutes.confirmPasswordRoute,arguments: {"otp":otpController.text});
+          String otpValue = otpController.text;
+          otpController.clear();
+          Get.offNamed(AppRoutes.confirmPasswordRoute,arguments: {"otp":otpValue});
         }
       }).onError((er, stackTrace) {
         print("$er");
         isloading.value=false;
+        otpController.clear();
         isloading.refresh();
         Get.snackbar('Error', '${er}');
       });
     }catch(er){
       isloading.value=false;
+      otpController.clear();
       isloading.refresh();
       print("$er");
     }

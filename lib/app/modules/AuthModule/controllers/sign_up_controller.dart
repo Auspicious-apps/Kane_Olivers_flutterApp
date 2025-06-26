@@ -50,6 +50,7 @@ class SignUpController extends BaseController {
     isloading.value=true;
     isloading.refresh();
     try{
+      Get.closeAllSnackbars();
       repository.signupApiCall(dataBody: data).then((value) async {
         if (value != null) {
           userResponseModel = value;
@@ -64,6 +65,7 @@ class SignUpController extends BaseController {
         print("$er");
         isloading.value=false;
         isloading.refresh();
+        Get.closeAllSnackbars();
         Get.snackbar('Error', '${er}');
       });
     }catch(er){

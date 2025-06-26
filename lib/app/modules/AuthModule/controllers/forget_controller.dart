@@ -47,6 +47,7 @@ class ForgetController extends BaseController {
     isloading.value = true;
     isloading.refresh();
     try {
+      Get.closeAllSnackbars();
       repository.ForgetPasswordApi(dataBody: data).then((value) async {
         if (value != null) {
           userResponseModel = value;

@@ -107,6 +107,7 @@ class SignupScreen extends GetView<SignUpController> {
                         Expanded(
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton2<String>(
+
                               isExpanded: true,
                               hint: Text(
                                 "Select",
@@ -116,6 +117,7 @@ class SignupScreen extends GetView<SignUpController> {
                                   color: AppColors.smallTextColor,
                                 ),
                               ),
+
                               items: controller.genders
                                   .map((String country) =>
                                       DropdownMenuItem<String>(
@@ -321,7 +323,7 @@ class SignupScreen extends GetView<SignUpController> {
         textController: controller.PasswordTextController,
         courserColor: AppColors.smallTextColor,
         maxLength: 30,
-        formatter: [PasswordInputFormatter()],
+        // formatter: [PasswordInputFormatter()],
         validate: (value) =>
             PasswordFormValidator.validatePassword(value?.trim() ?? ""),
 
@@ -350,7 +352,7 @@ class SignupScreen extends GetView<SignUpController> {
           Icons.lock_outlined,
           color: Colors.white,
         ).marginOnly(left: 10, right: 10),
-    formatter: [PasswordInputFormatter()],
+    // formatter: [PasswordInputFormatter()],
     validate: (value) =>
         PasswordFormValidator.validateConfirmPasswordMatch(value:value?.trim() ?? "",password: controller.PasswordTextController.text),
         textController: controller.ConfirmPasswordTextController,
@@ -374,7 +376,7 @@ class SignupScreen extends GetView<SignUpController> {
         courserColor: AppColors.smallTextColor,
         maxLength: 30,
         focusNode: controller.emailFocusNode,
-        formatter: [EmailTextInputFormatter()],
+        // formatter: [EmailTextInputFormatter()],
         inputType: TextInputType.emailAddress,
         validate: (value) => EmailValidator.validateEmail(value?.trim() ?? ""),
         borderRadius: Get.width * 0.1, // Relative to screen width
@@ -394,8 +396,8 @@ class SignupScreen extends GetView<SignUpController> {
         buttonText: "Sign Up",
         textColor: AppColors.backgroundColor,
         onPressed: () {
-          controller.isloading.value=true;
-          controller.isloading.refresh();
+
+
           if (controller.signupFormKey.currentState!.validate()) {
             if(controller.Acceptterms.value==false){
               Get.snackbar('Error', 'Please Accept terms & Conditions');
@@ -403,22 +405,23 @@ class SignupScreen extends GetView<SignUpController> {
               controller.isloading.refresh();
               return ;
             }
+            if( controller.isloading.value==false){
+              controller.isloading.value=true;
+              controller.isloading.refresh();
+              Map<String, dynamic> requestModel = AuthRequestModel.SignupRequestModel(
+                  fullName: controller.refferalCodeController?.text?.trim(),
+                  email: controller.emailController?.text?.trim(),
+                  countryCode: "+${controller.selectedCountry.value.dialCode}",
+                  phoneNumber: controller.mobileNumberTextController.text,
+                  gender: controller.selectGender.value,
+                  password: controller.ConfirmPasswordTextController.text,
 
-            Map<String, dynamic> requestModel = AuthRequestModel.SignupRequestModel(
-               fullName: controller.refferalCodeController?.text?.trim(),
-               email: controller.emailController?.text?.trim(),
-               countryCode: "+${controller.selectedCountry.value.dialCode}",
-               phoneNumber: controller.mobileNumberTextController.text,
-               gender: controller.selectGender.value,
-               password: controller.ConfirmPasswordTextController.text,
+                  fcmToken: ""
 
-              fcmToken: ""
+              );
+              controller.handleSubmit(requestModel);
+            }
 
-            );
-            controller.handleSubmit(requestModel);
-          }else{
-            controller.isloading.value=false;
-            controller.isloading.refresh();
           }
         },
       ));

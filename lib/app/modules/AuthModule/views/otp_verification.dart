@@ -112,7 +112,7 @@ class OtpVerification extends GetView<OtpVerificationController> {
 
                   style:  TextStyle(
                     fontSize: 12,
-                    color: AppColors.subHeadingColor,
+                    color:   controller.timerSeconds.value > 0?AppColors.subHeadingColor:Colors.yellow,
                     fontWeight: FontWeight.w900,
                     fontFamily: "Mulish",
                   ),
@@ -232,27 +232,28 @@ class OtpVerification extends GetView<OtpVerificationController> {
     buttonText: "Submit",
     textColor: AppColors.backgroundColor,
     onPressed: () {
-      controller.isloading.value=true;
-      controller.isloading.refresh();
-      if (controller.formKey.currentState!.validate()) {
-
-        Map<String, dynamic> requestModel = AuthRequestModel.verifyOtpRequestModel(
-           otp:controller.otpController.text
-        );
-        // debugPrint("controller.otpController.text>>>>>>>>>>>${controller.otpController.text}");
-
-       if(Get?.previousRoute==AppRoutes.signUpRoute){
-         controller.handleSubmit(requestModel);
-       }else{
-         controller.handleForgetSubmit(requestModel);
-       }
-
-
-      }else{
-        controller.isloading.value=false;
+      if (controller.isloading.value == false) {
+        controller.isloading.value = true;
         controller.isloading.refresh();
+        if (controller.formKey.currentState!.validate()) {
+          Map<String, dynamic> requestModel = AuthRequestModel
+              .verifyOtpRequestModel(
+              otp: controller.otpController.text
+          );
+          // debugPrint("controller.otpController.text>>>>>>>>>>>${controller.otpController.text}");
+
+          if (Get?.previousRoute == AppRoutes.signUpRoute ||
+              Get.previousRoute == AppRoutes.LoginRoute) {
+            controller.handleSubmit(requestModel);
+          } else {
+            controller.handleForgetSubmit(requestModel);
+          }
+        } else {
+          controller.isloading.value = false;
+          controller.isloading.refresh();
+        }
       }
-    },
+    }
       // Get.toNamed(AppRoutes.confirmPasswordRoute);
 
   ));

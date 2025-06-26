@@ -120,7 +120,7 @@ class ForgetPassword extends GetView<ForgetController> {
     courserColor: AppColors.smallTextColor,
     maxLength: 30,
     focusNode: controller.emailFocusNode,
-    formatter: [EmailTextInputFormatter()],
+    // formatter: [EmailTextInputFormatter()],
     inputType: TextInputType.emailAddress,
     validate: (value) => EmailValidator.validateEmail(value?.trim()?? ""),
 
@@ -141,12 +141,16 @@ class ForgetPassword extends GetView<ForgetController> {
     buttonText: "Send OTP Code",
     textColor: AppColors.backgroundColor,
     onPressed: () {
+
   if (controller.loginFormKey.currentState!.validate()) {
 
     Map<String, dynamic> requestModel = AuthRequestModel.forgetPasswordRequestModel(
       email: controller.emailController?.text?.trim(),
     );
-    controller.handleSubmit(requestModel);
+    if(controller.isloading.value==false){
+      controller.handleSubmit(requestModel);
+    }
+
 
   }
 
