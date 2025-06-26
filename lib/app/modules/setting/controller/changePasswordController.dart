@@ -37,23 +37,15 @@ class Changepasswordcontroller extends BaseController {
     isloading.value=true;
     isloading.refresh();
     try{
-      repository.ChangePasswordApi(dataBody: data).then((value) async {
+      repository.UpdatePasswordApi(dataBody: data).then((value) async {
         if (value != null) {
           isloading.value=false;
           isloading.refresh();
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                elevation: 0,
-                backgroundColor: Colors.white,
-                child: _buildOtpModalContent(context),
-              );
-            },
-          );
+          Get.back();
+          Get.closeAllSnackbars();
+          Get.snackbar('Success', 'Change Password Successfully');
+
+
         }
       }).onError((er, stackTrace) {
         print("$er");

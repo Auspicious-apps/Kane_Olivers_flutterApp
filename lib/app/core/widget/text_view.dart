@@ -10,6 +10,7 @@
   -->
  */
 
+import 'package:flutter/material.dart';
 import '../../export.dart';
 
 class TextView extends StatelessWidget {
@@ -33,8 +34,8 @@ class TextView extends StatelessWidget {
     return Text(
       text ?? "",
       style: textStyle,
-      maxLines: maxLines,
-      overflow: overflow,
+      maxLines: maxLines, // Will be null if maxLines is not provided, allowing unlimited lines
+      overflow: maxLines != null ? overflow : null, // Only apply overflow if maxLines is set
       textAlign: textAlign,
     );
   }

@@ -49,7 +49,7 @@ class Changepassword extends GetView<Changepasswordcontroller> {
     physics: const ClampingScrollPhysics(),
     child: Form(
       key: controller.signupFormKey,
-      child: Column(
+      child: Obx(()=>Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -117,21 +117,24 @@ class Changepassword extends GetView<Changepasswordcontroller> {
             buttonText: "Update Password",
             textColor: AppColors.backgroundColor,
             onPressed: () {
+              if(controller.isloading.value==false){
               if (controller.signupFormKey.currentState!.validate()) {
 
                 Map<String, dynamic> requestModel = AuthRequestModel.PasswordChangeRequestModel(
-                    password: controller.ConfirmPasswordTextController.text,
+                  oldPassword: controller.OldPasswordTextController.text,
+                    newPassword: controller.ConfirmPasswordTextController.text,
+
 
                 );
-                // controller.handleForgetSubmit(requestModel,context);
+                controller.handleForgetSubmit(requestModel,context);
 
-              }
+              }}
             },
           ))
 
           // 2% bottom padding
         ],
-      ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20),
+      ).marginOnly(top: margin_10).marginSymmetric(horizontal: 20)),
     ),
   );
 
@@ -156,10 +159,10 @@ class Changepassword extends GetView<Changepasswordcontroller> {
     textController: controller.OldPasswordTextController,
     courserColor: AppColors.smallTextColor,
     maxLength: 30,
-    obscureText: controller.ShowPassword.value,
+    obscureText: controller.ShowOldPassword.value,
     focusNode: controller.OldPasswordFocusNode,
     inputType: TextInputType.text,
-    formatter: [PasswordInputFormatter()],
+    // formatter: [PasswordInputFormatter()],
     validate: (value) =>
         PasswordFormValidator.validatePassword(value?.trim() ?? ""),
     borderRadius: Get.width * 0.1, // Relative to screen width
@@ -189,7 +192,7 @@ class Changepassword extends GetView<Changepasswordcontroller> {
     obscureText: controller.ShowPassword.value,
     focusNode: controller.PasswordFocusNode,
     inputType: TextInputType.text,
-    formatter: [PasswordInputFormatter()],
+    // formatter: [PasswordInputFormatter()],
     validate: (value) =>
         PasswordFormValidator.validatePassword(value?.trim() ?? ""),
     borderRadius: Get.width * 0.1, // Relative to screen width
@@ -220,7 +223,7 @@ class Changepassword extends GetView<Changepasswordcontroller> {
     obscureText: controller.ShowConfirmPassword.value,
     focusNode: controller.ConfirmPasswordFocusNode,
     inputType: TextInputType.text,
-    formatter: [PasswordInputFormatter()],
+    // formatter: [PasswordInputFormatter()],
     validate: (value) => PasswordFormValidator.validateConfirmPasswordMatch(
         value: value?.trim() ?? "",
         password: controller.PasswordTextController.text),

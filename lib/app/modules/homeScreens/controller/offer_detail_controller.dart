@@ -1,6 +1,7 @@
 import '../../../core/widget/intl_phone_field/countries.dart';
 import '../../../export.dart';
 import '../../homeScreens/models/responseModels/HomeResponseModel.dart';
+import '../models/responseModels/OfferDetailResponseModel.dart';
 import '../models/responseModels/OffersResponseModel.dart';
 import '../models/responseModels/ResturantsResponseModel.dart';
 import '/app/core/base/base_controller.dart';
@@ -18,7 +19,7 @@ class OfferDetailController extends BaseController {
   RxList<PopularRestaurants> filteredRestaurants = <PopularRestaurants>[].obs;
 
   FocusNode? emailFocusNode;
-  Rx<OffersResponseModel> userResponseModel=Rx<OffersResponseModel>(OffersResponseModel());
+  Rx<OffersDetailResponseModel> userResponseModel=Rx<OffersDetailResponseModel>(OffersDetailResponseModel());
 
   @override
   void onInit() {
@@ -27,7 +28,6 @@ class OfferDetailController extends BaseController {
       id=Get.arguments["id"];
       fetchHomeData(value: id);
     }
-
     super.onInit();
   }
 
@@ -39,7 +39,7 @@ class OfferDetailController extends BaseController {
     isLoading.value=true;
     isLoading.refresh();
     try{
-      repository.GetAllOffersApi(query: {"id":value?.trim(),"limit":30,"page":1,}).then((value) async {
+      repository.GetOffersDetailApi(id:value).then((value) async {
         if (value != null) {
           userResponseModel.value = value;
           isLoading.value=false;

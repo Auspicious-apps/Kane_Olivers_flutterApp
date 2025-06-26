@@ -35,12 +35,15 @@ class AuthRequestModel {
   static PasswordChangeRequestModel({
 
     String? password,
+    String? oldPassword,
+    String? newPassword,
     String? otp
   }) {
     final Map<String, dynamic> data = <String, dynamic>{};
-
     data["password"] = password;
     data["otp"] = otp;
+    data["oldPassword"] = oldPassword;
+    data["newPassword"] = newPassword;
     return data;
   }
 

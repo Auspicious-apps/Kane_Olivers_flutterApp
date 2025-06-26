@@ -186,7 +186,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             borderRadius: BorderRadius.circular(70),
                           ),
                       child: Center(
-                      child: AssetImageWidget(index==0?coinsicon:index==1?iconScanner:index==2?iconInviteFriend:iconSpin,
+                      child: AssetImageWidget(index==0?Acheievements:index==1?iconScanner:index==2?iconInviteFriend:iconSpin,
                       imageHeight: 35,
                       imageFitType: BoxFit.contain,
                       imageWidth: 35,
@@ -350,55 +350,62 @@ class HomeScreen extends GetView<HomeScreenController> {
             physics: const ClampingScrollPhysics(),
             itemCount: controller.userResponseModel?.value.data?.offersAvailable?.length??0,
             itemBuilder: (context, index) {
-              return Container(
-                width: Get.width*0.7,
-                decoration: BoxDecoration(color: AppColors.backgroundColor,borderRadius: BorderRadius.circular(10)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                  AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
-                    TextView(
-                      text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.restaurantId?.restaurantName}",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: AppColors.whiteColor,
-                        fontSize: 14,
-                         fontWeight: FontWeight.w800,
-                        fontFamily: "Mulish",
-                      ),
-                    ).marginSymmetric(horizontal: margin_10,vertical: margin_10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextView(
-                          text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.offerName}",
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                            color: AppColors.whiteColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Mulish",
-                          ),
+              return GestureDetector(
+                onTap: (){
+
+                  Get.toNamed(AppRoutes.OffersDetails,arguments: {"id":controller.userResponseModel?.value.data?.offersAvailable?[index]?.sId});
+                },
+
+                child: Container(
+                  width: Get.width*0.7,
+                  decoration: BoxDecoration(color: AppColors.backgroundColor,borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
+                      TextView(
+                        text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.restaurantId?.restaurantName}",
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: AppColors.whiteColor,
+                          fontSize: 14,
+                           fontWeight: FontWeight.w800,
+                          fontFamily: "Mulish",
                         ),
-                        TextView(
-                          text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.visits} Visits",
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                            color: AppColors.whiteColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Mulish",
+                      ).marginSymmetric(horizontal: margin_10,vertical: margin_10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextView(
+                            text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.offerName}",
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                              color: AppColors.whiteColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Mulish",
+                            ),
                           ),
-                        ),
-                      ],
-                    ).marginSymmetric(horizontal: margin_10),
-                  ],
-                ),
-              ).marginSymmetric(horizontal: 10,vertical: 20);
+                          TextView(
+                            text:"${controller.userResponseModel?.value.data?.offersAvailable?[index]?.visits} Visits",
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                              color: AppColors.whiteColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Mulish",
+                            ),
+                          ),
+                        ],
+                      ).marginSymmetric(horizontal: margin_10),
+                    ],
+                  ),
+                ).marginSymmetric(horizontal: 10,vertical: 20),
+              );
             },
           ),
         ).marginOnly(left: 20),

@@ -136,56 +136,62 @@ class OffersScreen extends GetView<OffersController> {
             physics: const ClampingScrollPhysics(),
             itemCount: controller.userResponseModel?.value.data?.restaurantOffers?.length??0,
             itemBuilder: (context, index) {
-              return Container(
-                width: Get.width*0.7,
-                height: Get.height/4,
-                decoration: BoxDecoration(color: AppColors.backgroundColor,borderRadius: BorderRadius.circular(10)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
-                    TextView(
-                      text:"${controller.userResponseModel?.value.data?.restaurantOffers?[index]?.restaurantId?.restaurantName}",
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: AppColors.whiteColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        fontFamily: "Mulish",
-                      ),
-                    ).marginSymmetric(horizontal: margin_10,vertical: margin_10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextView(
-                          text:"${controller.userResponseModel?.value.data?.restaurantOffers?[index]?.offerName}",
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                            color: AppColors.whiteColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Mulish",
-                          ),
+              return GestureDetector(
+                onTap: (){
+
+                Get.toNamed(AppRoutes.OffersDetails,arguments: {"id":controller.userResponseModel?.value.data?.restaurantOffers?[index]?.sId});
+  },
+                child: Container(
+                  width: Get.width*0.7,
+                  height: Get.height/4,
+                  decoration: BoxDecoration(color: AppColors.backgroundColor,borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AssetImageWidget(offerCoverImage,imageHeight:height_120,imageWidth: Get.width,imageFitType: BoxFit.cover,radiusTopLeft: 10,radiusTopRight: 10,),
+                      TextView(
+                        text:"${controller.userResponseModel?.value.data?.restaurantOffers?[index]?.restaurantId?.restaurantName}",
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: AppColors.whiteColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          fontFamily: "Mulish",
                         ),
-                        TextView(
-                          text:"${controller.userResponseModel?.value.data?.restaurantOffers?[index]?.visits} Visits",
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
-                            color: AppColors.whiteColor,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Mulish",
+                      ).marginSymmetric(horizontal: margin_10,vertical: margin_10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextView(
+                            text:"${controller.userResponseModel?.value.data?.restaurantOffers?[index]?.offerName}",
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                              color: AppColors.whiteColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Mulish",
+                            ),
                           ),
-                        ),
-                      ],
-                    ).marginSymmetric(horizontal: margin_10),
-                  ],
-                ),
-              ).marginSymmetric(horizontal: 10,vertical: 20);
+                          TextView(
+                            text:"${controller.userResponseModel?.value.data?.restaurantOffers?[index]?.visits} Visits",
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                              color: AppColors.whiteColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Mulish",
+                            ),
+                          ),
+                        ],
+                      ).marginSymmetric(horizontal: margin_10),
+                    ],
+                  ),
+                ).marginSymmetric(horizontal: 10,vertical: 20),
+              );
             },
           ),
         ).marginOnly(left: 10, right: 10),

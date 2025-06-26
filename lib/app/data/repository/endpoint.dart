@@ -24,7 +24,9 @@ const String GetAllResturantsEndPoint = "api/user/restaurants";
 
 const String GetAllOffersEndPoint = "api/user/restaurant-offers";
 
+const String UpdatePasswordEndPoint = "api/user/change-password";
 
+const String StaticApiEndPoint = "api/user/settings";
 
 //type const
 

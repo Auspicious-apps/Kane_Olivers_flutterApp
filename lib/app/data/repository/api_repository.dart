@@ -16,8 +16,10 @@ import 'package:http_parser/http_parser.dart';
 import '../../export.dart';
 
 import '../../modules/homeScreens/models/responseModels/HomeResponseModel.dart';
+import '../../modules/homeScreens/models/responseModels/OfferDetailResponseModel.dart';
 import '../../modules/homeScreens/models/responseModels/OffersResponseModel.dart';
 import '../../modules/homeScreens/models/responseModels/ResturantsResponseModel.dart';
+import '../../modules/setting/models/ResponseModels/staticResponseModel.dart';
 import 'dio_client.dart';
 import 'endpoint.dart';
 import 'network_exceptions.dart' show NetworkExceptions;
@@ -111,6 +113,24 @@ class Repository {
     }
   }
 
+  Future StaticApi({query}) async {
+    try {
+      final response = await dioClient!.get(StaticApiEndPoint,skipAuth: false,queryParameters: query);
+      return StaticResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
+  Future GetOffersDetailApi({id}) async {
+    try {
+      final response = await dioClient!.get("${GetAllOffersEndPoint}/${id}",skipAuth: false);
+      return OffersDetailResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
 
 
 
@@ -119,6 +139,18 @@ class Repository {
     try {
       final response = await dioClient!.patch(changePasswordEndPoint,
           data: jsonEncode(dataBody), isLoading: showLoader);
+      return UserResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
+
+  Future UpdatePasswordApi(
+      {required Map<String, dynamic>? dataBody, bool showLoader = true}) async {
+    try {
+      final response = await dioClient!.put(UpdatePasswordEndPoint,
+          data: jsonEncode(dataBody), isLoading: showLoader,skipAuth: false);
       return UserResponseModel.fromJson(response);
     } catch (e) {
       return Future.error(NetworkExceptions.getDioException(e));
