@@ -66,7 +66,7 @@ class Notifications extends GetView<NotificationController> {
             width: Get.width*0.6,
             child: Center(
               child: TextView(
-                text: "Notifications",
+                text: "Profile",
                 textAlign: TextAlign.start,
                 maxLines: 3,
                 textStyle:

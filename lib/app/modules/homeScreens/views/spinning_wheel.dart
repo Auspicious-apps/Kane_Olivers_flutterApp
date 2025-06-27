@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spinning_wheel/spinning_wheel.dart';
-import 'dart:math';
-
+import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import '../../../core/widget/annotated_region_widget.dart';
 import '../../../export.dart';
 import '../controller/spinning_wheel_controller.dart';
@@ -37,215 +35,185 @@ class SpinningWheel extends GetView<SpinningWheelController> {
   }
 
   Widget _body(BuildContext context) => SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
-        child: Column(
+    physics: const ClampingScrollPhysics(),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(35),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 20,
-                    ).marginOnly(left: 8),
-                  ),
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Container(
+                height: 35,
+                width: 35,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(35),
                 ),
-                Container(
-                  width: Get.width * 0.7,
-                  child: Center(
-                    child: TextView(
-                      text: "Spin a Wheel",
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                      textStyle:
-                          Theme.of(context).textTheme.displayMedium!.copyWith(
-                                color: AppColors.LargeTextColor,
-                                fontSize: 24,
-                                fontFamily: "TOMMYSOFT",
-                              ),
-                    ),
-                  ),
-                ),
-              ],
-            ).marginOnly(top: margin_14, left: 20),
-            SizedBox(height: Get.height * 0.15),
-            Center(
-              child: Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/spinframe.png',
-                    fit: BoxFit.contain,
-                  ).marginSymmetric(horizontal: margin_30, vertical: 30),
-                  SizedBox(
-                    height: Get.width * 0.9,
-                    width: Get.width * 0.9,
-                    child: SpinnerWheel(
-                      controller: controller.spinnerController,
-                      labelStyle: TextStyle(color: Colors.black),
-                      wheelColor: Colors.transparent,
-
-                      segments: [
-                        WheelSegment('Best of Luck', Colors.red, 0),
-                        WheelSegment('400 Points', Colors.green, 400),
-                        WheelSegment('800 Points', Colors.blue, 800),
-                        WheelSegment('7000 Points', Colors.yellow, 7000),
-                        WheelSegment('5000 Points', Colors.purple, 5000),
-                        WheelSegment('300 Points', Colors.orange, 300),
-                      ],
-                      onComplete: (win) {
-                        controller
-                            .addDivider(RouletteScore.getIndex(win.label));
-                        controller.stopSpinAudio();
-                        if (win.value > 0) {
-                          // Handle points addition if needed
-                        }
-                      },
-                    ),
-                  ).marginSymmetric(horizontal: 20, vertical: 18),
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: Get.height * 0.6),
-                        Obx(
-                          () => controller.freeSpin.value < 0
-                              ? SizedBox()
-                              : StreamBuilder<int>(
-                                  stream: controller.dividerStream,
-                                  builder: (context, snapshot) {
-                                    return snapshot.hasData
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Text(
-                                              "${RouletteScore.labels[snapshot.data] != '' ? 'You won ${RouletteScore.labels[snapshot.data] ?? 'Spin Again'}!' : 'Better Luck Next Time'}",
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                                fontSize: 24.0,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          )
-                                        : Container();
-                                  },
-                                ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    top: 150,
-                    left: 147,
-                    child: GestureDetector(
-                      onTap: (){
-                        controller.isSpinning.value
-                              ? null
-                              : () {
-                          if (controller.freeSpin.value <= 0) {
-                            Get.dialog(
-                              AlertDialog(
-                                title: Text('No Free Spins'),
-                                content: Text('You have no free spins left!'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Get.back(),
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              ),
-                              barrierDismissible: false,
-                            );
-                            return;
-                          }
-                          controller.playSpinAudio();
-                          controller.freeSpin.value--;
-                          controller.spinnerController.startSpin();
-                        };
-                      },
-                      child: SizedBox(
-                        height: 70,
-                        width: 70,
-                        child: ElevatedButton(
-                          onPressed: controller.isSpinning.value
-                              ? null
-                              : () {
-                            if (controller.freeSpin.value <= 0) {
-                              Get.dialog(
-                                AlertDialog(
-                                  title: Text('No Free Spins'),
-                                  content: Text('You have no free spins left!'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Get.back(),
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                                barrierDismissible: false,
-                              );
-                              return;
-                            }
-                            controller.playSpinAudio();
-                            controller.freeSpin.value--;
-                            controller.spinnerController.startSpin();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                           Colors.amber,
-                            
-                          ),
-                          child: Text(
-                           "Go",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontFamily: "TOMMYSOFT"
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                ).marginOnly(left: 8),
               ),
             ),
-
+            Container(
+              width: Get.width * 0.7,
+              child: Center(
+                child: TextView(
+                  text: "Spin a Wheel",
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  textStyle: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    color: AppColors.LargeTextColor,
+                    fontSize: 24,
+                    fontFamily: "TOMMYSOFT",
+                  ),
+                ),
+              ),
+            ),
           ],
-        ),
-      );
+        ).marginOnly(top: margin_14, left: 20),
+        SizedBox(height: Get.height * 0.15),
+        Center(
+          child: Stack(
+            children: [
+              Image.asset(
+                'assets/images/spinframe.png',
+                fit: BoxFit.contain,
+              ).marginSymmetric(horizontal: margin_10, vertical: 14),
+              SizedBox(
+                height: Get.width * 0.85,
+                width: Get.width * 0.85,
+
+                child: FortuneWheel(
+                  animateFirst:false,
+                  selected: controller.selectedController.stream,
+                  // duration:Duration(seconds: 6),
+                  // indicators: [],
+
+                  items: [
+                    FortuneItem(
+                        child: const Text('Best of Luck',
+                            style: TextStyle(color: Colors.black)),
+                        style: FortuneItemStyle(
+                            color: Colors.red,
+                            borderColor: Colors.white,
+                            borderWidth: 2)),
+                    FortuneItem(
+                        child: const Text('7000 Points',
+                            style: TextStyle(color: Colors.black)),
+                        style: FortuneItemStyle(
+                            color: Colors.green,
+                            borderColor: Colors.white,
+                            borderWidth: 2)),
+                    FortuneItem(
+                        child: const Text('5000 Points',
+                            style: TextStyle(color: Colors.black)),
+                        style: FortuneItemStyle(
+                            color: Colors.blue,
+                            borderColor: Colors.white,
+                            borderWidth: 2)),
+                    FortuneItem(
+                        child: const Text('2000 Points',
+                            style: TextStyle(color: Colors.black)),
+                        style: FortuneItemStyle(
+                            color: Colors.yellow,
+                            borderColor: Colors.white,
+                            borderWidth: 2)),
+                    FortuneItem(
+                        child: const Text('400 Points',
+                            style: TextStyle(color: Colors.black)),
+                        style: FortuneItemStyle(
+                            color: Colors.purple,
+                            borderColor: Colors.white,
+                            borderWidth: 2)),
+                    FortuneItem(
+                        child: const Text('100 Points',
+                            style: TextStyle(color: Colors.black)),
+                        style: FortuneItemStyle(
+                            color: Colors.orange,
+                            borderColor: Colors.white,
+                            borderWidth: 2)),
+                  ],
+                  onAnimationEnd: () {
+                    controller.addDivider(RouletteScore.getIndex('7000 Points')); // Match spin result
+                    controller.stopSpinAudio();
+                // Show popup after 3 seconds
+                  },
+                ),
+
+              ).marginSymmetric(horizontal: 25, vertical:10),
+              Positioned(
+                  top: Get.width/2.4,
+                  left: Get.width/2.5,
+                  child: Container(height: 30,width: 30,decoration: BoxDecoration(color: Color.fromRGBO(208,155,79, 1),borderRadius: BorderRadius.circular(20)),)),
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: Get.height * 0.65),
+                  // Space between result text and button
+                  ElevatedButton(
+                        onPressed: () {
+                          controller.spinToBestOfLuck();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber,
+                          padding: const EdgeInsets.symmetric( vertical: 15),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.touch_app,color: Colors.white,),
+                             Text(
+                              "Spin",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontFamily: "TOMMYSOFT",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ).marginSymmetric(horizontal: 30),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ).marginSymmetric(horizontal: 20),
+      ],
+    ),
+  );
 }
 
 class RouletteScore {
   static final Map<int, String> labels = {
     1: '',
-    2: '400 Points',
-    3: '800 Points',
-    4: '7000 Points',
-    5: '5000 Points',
-    6: '300 Points',
-    7: '2000 Points',
-    8: '100 Points',
+    2: '7000 Points',
+    3: '5000 Points',
+    4: '2000 Points',
+
+    5: '400 Points',
+
+    6: '100 Points',
   };
 
   static int getIndex(String label) {
     return labels.entries
         .firstWhere((entry) => entry.value == label,
-            orElse: () => MapEntry(1, ''))
+        orElse: () => const MapEntry(1, ''))
         .key;
   }
 }

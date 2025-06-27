@@ -28,4 +28,6 @@ abstract class AppRoutes {
   static const ResturantRoute = '/ResturantRoute';
   static const OffersRoute = '/OfferRoute';
   static const OffersDetails = '/OffersDetails';
+  static const Profile = '/Profile';
+
 }

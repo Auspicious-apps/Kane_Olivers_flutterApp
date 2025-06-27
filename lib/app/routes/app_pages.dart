@@ -23,6 +23,8 @@ import 'package:OLIVERS/app/modules/AuthModule/views/confirm_password.dart';
 import 'package:OLIVERS/app/modules/AuthModule/views/forget_password.dart';
 import 'package:OLIVERS/app/modules/AuthModule/views/otp_verification.dart';
 import 'package:OLIVERS/app/modules/AuthModule/views/signup_Screen.dart';
+import 'package:OLIVERS/app/modules/Myprofile/dart/binding/dart/profile_binding.dart';
+import 'package:OLIVERS/app/modules/Myprofile/dart/view%20/profile.dart';
 import 'package:OLIVERS/app/modules/homeScreens/bindings/Resturant_bindings.dart';
 import 'package:OLIVERS/app/modules/homeScreens/bindings/offer_detail_binding.dart';
 import 'package:OLIVERS/app/modules/homeScreens/bindings/offers_binding.dart';
@@ -145,6 +147,12 @@ class AppPages {
       name: AppRoutes.OffersDetails,
       page: () =>  OfferDetailScreen(),
       bindings: [OfferDetailBinding()],
+
+    ),
+    GetPage(
+      name: AppRoutes.Profile,
+      page: () =>  Profile(),
+      bindings: [ProfileBinding()],
 
     ),
   ];

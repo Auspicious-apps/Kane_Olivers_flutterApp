@@ -122,6 +122,16 @@ class Repository {
     }
   }
 
+
+  Future GetProfile({query}) async {
+    try {
+      final response = await dioClient!.get(GetProfileEndPoint,skipAuth: false,queryParameters: query);
+      return UserResponseModel.fromJson(response);
+    } catch (e) {
+      return Future.error(NetworkExceptions.getDioException(e));
+    }
+  }
+
   Future GetOffersDetailApi({id}) async {
     try {
       final response = await dioClient!.get("${GetAllOffersEndPoint}/${id}",skipAuth: false);

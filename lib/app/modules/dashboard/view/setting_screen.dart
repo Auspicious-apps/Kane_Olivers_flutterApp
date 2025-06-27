@@ -157,6 +157,9 @@ class SettingScreen extends GetView<SettingScreenController> {
       if(name=="Notifications"){
         Get.toNamed(AppRoutes.NotificationRoute);
       }
+      if(name=="My Profile"){
+        Get.toNamed(AppRoutes.Profile);
+      }
     },
     child: Container(
       height: 40,

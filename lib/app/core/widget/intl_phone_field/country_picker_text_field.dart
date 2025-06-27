@@ -130,7 +130,7 @@ class CountryPickerTextField extends StatelessWidget {
             ? InputBorder.none
             :   OutlineInputBorder(
             borderRadius: BorderRadius.circular( radius_50),
-            borderSide:BorderSide(color: ( Colors.yellow))),
+            borderSide:BorderSide(color: (borderColor?? Colors.yellow))),
 
       disabledBorder: !showBorder
           ? InputBorder.none

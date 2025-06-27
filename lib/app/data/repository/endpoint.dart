@@ -1,5 +1,5 @@
 
-const String baseUrl = "https://b8f3-103-223-15-43.ngrok-free.app/";
+const String baseUrl = "https://7921-103-223-15-43.ngrok-free.app/";
 const String imageBaseUrl =
     "https://demoprojectsbucket.sgp1.digitaloceanspaces.com/image/original/";
 const String videoBaseUrl =
@@ -27,7 +27,8 @@ const String GetAllOffersEndPoint = "api/user/restaurant-offers";
 const String UpdatePasswordEndPoint = "api/user/change-password";
 
 const String StaticApiEndPoint = "api/user/settings";
-
+const String GetProfileEndPoint = "api/user/current-user";
+const String DeleteAccountEndPoint = "api/user/current-user";
 //type const
 
 const typeActive = 0;
