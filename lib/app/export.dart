@@ -46,6 +46,7 @@ export 'package:OLIVERS/app/core/values/app_strings.dart';
 export 'package:OLIVERS/app/core/values/app_values.dart';
 export 'package:OLIVERS/app/core/widget/asset_image.dart';
 export 'package:OLIVERS/app/core/widget/button_widget.dart';
+export 'package:OLIVERS/app/core/widget/shimmer_widget.dart';
 /* ================================================app constants ===========================================*/
 
 export 'package:OLIVERS/app/core/values/app_arguments.dart';
