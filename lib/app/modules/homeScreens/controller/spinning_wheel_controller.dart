@@ -1,15 +1,18 @@
 import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
+import 'package:spinning_wheel/controller/spin_controller.dart';
 import '../../../core/widget/intl_phone_field/countries.dart';
 import '../../../export.dart';
 import '/app/core/base/base_controller.dart';
 
 class SpinningWheelController extends BaseController {
+  final spinnerController = SpinnerController();
   final StreamController<int> _dividerController = StreamController<int>.broadcast();
   Stream<int> get dividerStream => _dividerController.stream;
-  RxInt freeSpin=10.obs;
+  RxInt freeSpin=1.obs;
 
+  final isSpinning = false.obs;
   // AudioPlayer instance for playing spin audio
   final AudioPlayer _audioPlayer = AudioPlayer();
 

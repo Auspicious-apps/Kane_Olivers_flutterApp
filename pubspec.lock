@@ -1112,14 +1112,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
-  pp_spin_wheel:
-    dependency: "direct main"
-    description:
-      name: pp_spin_wheel
-      sha256: ee63f2f6ac127eaac815ba068160554242048216a0c11f685fa6361ddeff7103
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.9"
   pretty_dio_logger:
     dependency: "direct main"
     description:
@@ -1197,6 +1189,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.1"
+  spinning_wheel:
+    dependency: "direct main"
+    description:
+      name: spinning_wheel
+      sha256: "30692f9981a579378b9afe80a8f5ff79ce8bc5dfdab532847a1336a3dd2407eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   sprintf:
     dependency: transitive
     description:
